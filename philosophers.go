@@ -5,27 +5,28 @@ import(
 )
 
 type Philosopher struct{
-	//channel in - spiser du lige nu? hvor mange gange har du spist?
-	in chan <- int
+	//channel in - gaffel er ledig
+	chIN chan int
 
-	//channel out - jeg har spist så mange gange, og jeg tænker
-	out chan <- int
+	//channel out - jeg vil spise/jeg vil ikke spise længere
+	chOUT chan int
 	
 	//number of times eaten
-	var timesEaten int
+	timesEaten int
 
 	//eating (true) or thinking (false)
-	var eating bool
+	eating bool
 }
 
-func phil(chIN, chOut){
+func phil(chIN, chOUT){
 	counter:= 0
 	for{
-	chOUT <- i wanna eat	
-	<-chIN
-	counter++
-	chOUT <- im done
-
+		chOUT <-//i wanna eat	
+		<-chIN //receive fork
+		
+		counter++
+		chOUT <- //im done
+		
 	}
 }
 

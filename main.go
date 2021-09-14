@@ -1,13 +1,6 @@
 package main
 
 func main() {
-	//we need to be able to ask with certain int values
-	// 0 = how many times have you been used/eaten
-	// -1 = are you being used/are you eating
-
-}
-
-func main() {
 	ch1, ch2 := make(chan int), make(chan int)
 	go fork(ch1, ch2)
 	go phil(ch2, ch1)
