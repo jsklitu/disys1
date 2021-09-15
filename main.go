@@ -1,22 +1,18 @@
 package main
 
+import (
+	f "disys1/forks"
+	p "disys1/philosophers"
+)
+
 func main() {
-	ch1, ch2 := make(chan int), make(chan int)
-	go fork(ch1, ch2)
-	go phil(ch2, ch1)
+	//evt bare lav 5 af hver og så 10 kanaler
+	//når fork of ohil oprettes skal de så navngives med noget smart
+
+	ch1, ch2 := make(chan string), make(chan string)
+	go f.Fork(ch1, ch2)
+	go p.Phil(ch2, ch1)
 	for {
 		//eat forever
-	}
-}
-
-func fork(chIN, chOUT) {
-	for {
-		<-chIN
-		//besked om at samlpe op
-
-		chOUT <- "spis, yes"
-
-		//hvornår er jeg lagt igen?
-		<-chIN
 	}
 }

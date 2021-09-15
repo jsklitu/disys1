@@ -1,4 +1,4 @@
-package main
+package philosophers
 
 import(
 	"fmt"
@@ -18,7 +18,7 @@ type Philosopher struct{
 	eating bool
 }
 
-func phil(chIN, chOUT){
+func Phil(chIN, chOUT chan string){
 	counter:= 0
 	for{
 		chOUT <-//i wanna eat	
