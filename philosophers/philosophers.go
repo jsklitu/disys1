@@ -1,40 +1,50 @@
 package philosophers
 
-import(
+import (
 	"fmt"
+	"strconv"
+	"time"
 )
 
-type Philosopher struct{
-	//channel in - gaffel er ledig
-	chIN chan int
+type Philosopher struct {
+	Name string
 
-	//channel out - jeg vil spise/jeg vil ikke spise længere
-	chOUT chan int
-	
-	//number of times eaten
-	timesEaten int
+	LeftIn  chan string
+	LeftOut chan string
 
-	//eating (true) or thinking (false)
-	eating bool
+	RightIn  chan string
+	RightOut chan string
+
+	MainIn  chan string
+	MainOut chan string
 }
 
-func Phil(chIN, chOUT chan string){
-	counter:= 0
-	for{
-		chOUT <-//i wanna eat	
-		<-chIN //receive fork
-		
+func Phil(p Philosopher) {
+	counter := 0
+	for {
+		p.LeftOut <- "i wanna eat pls"
+		<-p.LeftIn //get left fork
+
+		p.RightOut <- "are you also available i wanna EAATTTTT!!"
+		<-p.RightIn //get right fork
+
+		fmt.Println("Philosopher " + p.Name + " is now eating")
 		counter++
-		chOUT <- //im done
-		
+
+		time.Sleep(time.Second)
+
+		p.LeftOut <- "u available now"
+		p.RightOut <- "u2"
+
+		fmt.Println("Philosopher " + p.Name + " is now thinking")
+
+		select {
+		case <-p.MainIn:
+			{
+				p.MainOut <- "Philosopher " + p.Name + " has now eaten " + strconv.Itoa(counter) + " times"
+			}
+
+		}
+
 	}
 }
-
-//channel fra phil til gaffel. tre tjeks i alt. er du ledig? ja. nu er jeg færidg. og så til begge sider
-//ch1:=make(chan string)
-	//<- chIN - jeg vil gerne modtage. når den får en besked kan den skrive til chOUT "tag mig", som phil ser
-	//når phil så er færdig får den endnu en besked på chIN "nu er jeg done"
-//med unbuffered står den stille og venter på der kommer en besked. først når der kommer en går den
-//videre. og slef skal der være en goroutine der skal læse inputtet
-
-
